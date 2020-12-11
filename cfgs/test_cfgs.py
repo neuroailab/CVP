@@ -14,7 +14,7 @@ class TestOptions(BaseOptions):
         # For testing
         self.parser.add_argument('--test_mod', default='multi_5', help='multi/best_100')
         self.parser.add_argument('--test_split', default='test', type=str)
-        self.parser.add_argument('--checkpoint', default=None, type=str)
+        self.parser.add_argument('--checkpoint', default='./output/tmp/vvnrgb_cvp_traj_comb_late_fact_gc_n2e2n_Ppix1_iter10000.pth', type=str)
         self.parser.add_argument('--num_val_samples', default=None, type=int)
         self.parser.add_argument('--shuffle_val', default=False, type=bool_flag)
         self.isTrain = False
