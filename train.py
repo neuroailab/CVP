@@ -13,16 +13,20 @@ from cvp.losses import LossManager
 
 
 def main(args):
+    print('batch_size', args.batch_size)
+
     torch.manual_seed(123)
     model_name = model_utils.get_model_name(args)
     float_dtype = torch.cuda.FloatTensor
 
+    print('loading train_loader ...')
     train_loader = model_utils.build_loaders(args)  # change to image
+    print('Done')
 
     model = model_utils.build_all_model(args)  # CNN, GCN, Encoder, Decoder
     model.type(float_dtype)
     model.train()
-    # print(model)
+
     optimizer = torch.optim.Adam(model.parameters(), lr=args.learning_rate)
     t, epoch = 0, 0
     checkpoint = {
@@ -39,12 +43,15 @@ def main(args):
     logger = Logger(model_name, args)
     loss_mng = LossManager(args)
 
-    if args.dataset == 'ss3':
-        save_iters = [50000]
-    elif args.dataset.startswith('penn'):
-        save_iters = [100000, 300000]
-    else:
-        raise NotImplementedError
+    # if args.dataset == 'ss3':
+        # save_iters = [50000]
+    # elif args.dataset.startswith('vvn'):
+        # save_iters = [9, 100, 1000, 5000, 10000, 50000, 100000]
+    # elif args.dataset.startswith('penn'):
+        # save_iters = [99999, 300000]
+    # else:
+        # raise NotImplementedError
+    save_iters = [10, 100, 1000, 5000, 10000, 50000, 100000]
 
     while True:
         if t >= save_iters[-1]:
@@ -65,7 +72,8 @@ def main(args):
             if t % args.curve_log_every == 0:
                 logger.add_loss(t, losses, pref='train/')
             if t < 1e4 and t % args.image_log_every == 0 or t % 1e4 == 0:
-                images = vis_utils.get_bbox_traj(batch['bbox'][1:args.dt], predictions['bbox'][0:args.dt-1], args.dt - 1, 4)
+                dt = args.dt - args.show_length + 1
+                images = vis_utils.get_bbox_traj(batch['bbox'][1:dt], predictions['bbox'][0:dt-1], dt- 1, 4)
                 logger.add_images(t, images, name='train/bbox_traj')
                 images = vis_utils.get_crop(predictions['real_recon'], max_num=1)
                 logger.add_images(t, images, name='real_recon')

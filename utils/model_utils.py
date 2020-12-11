@@ -29,16 +29,22 @@ def get_model_name(args):
 
 
 def build_loaders(args):
-    if args.dataset.startswith('ss'):
-        args.bbox_num = int(args.dataset[2])
-        from data.ShapeStacks import build_vid_loaders
-    elif args.dataset.startswith('penn'):
-        args.bbox_num = 13
-    elif args.dataset.startswith('pok'):
-        args.bbox_num = 13
-        from data.PennPoseKnows import build_vid_loaders
-    elif args.dataset.startswith('demo'):
-        from data.DemoImage import build_vid_loaders
+    # if args.dataset.startswith('vvn'):
+        # from data.Vvn import build_vid_loaders
+    # elif args.dataset.startswith('ss'):
+        # args.bbox_num = int(args.dataset[2])
+        # from data.ShapeStacks import build_vid_loaders
+    # elif args.dataset.startswith('penn'):
+        # args.bbox_num = 13
+    # elif args.dataset.startswith('pok'):
+        # args.bbox_num = 13
+        # from data.PennPoseKnows import build_vid_loaders
+    # elif args.dataset.startswith('demo'):
+        # from data.DemoImage import build_vid_loaders
+    # else:
+        # assert False
+
+    from data.Vvn import build_vid_loaders
     loader = build_vid_loaders(args)
     return loader
 
