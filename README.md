@@ -1,5 +1,22 @@
+## Sample command 
+to train on our own dataset
+
+Training
+
+```
+$ python3 write_train_test_txt.py
+$ python3 train.py --dataset DATASET_DIR --gpu GPU_DEVICES
+```
+
+Testing
+
+```
+$ python3 test.py --dataset DATASET_DIR,HUMAN_DATASET_DIR --gpu GPU_DEVICES --checkpoint SAVED_MODEL_PATH
+```
+
 # Compositional Video Prediction
 Yufei Ye,    Maneesh Singh,    Abhinav Gupta*, and   Shubham Tulsiani*
+
    
 [Project Page](https://judyye.github.io/CVP/), [Arxiv](http://arxiv.org/abs/1908.08522) 
 ![](docs/pred1.gif)
